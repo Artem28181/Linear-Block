@@ -11,35 +11,23 @@
       color: #f0f0f0;
     }
     header {
-      padding: 20px;
       background: #1f1f1f;
+      padding: 10px 20px;
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      position: sticky;
-      top: 0;
-      z-index: 100;
     }
-    .logo {
-      font-size: 24px;
-      font-weight: bold;
-      color: #00ffaa;
+    .logo-img {
+      height: 50px;
     }
-    nav button {
-      margin-left: 10px;
-      background: transparent;
-      border: 1px solid #00ffaa;
-      color: #00ffaa;
-      padding: 8px 16px;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-    nav button:hover {
-      background: #00ffaa;
-      color: #121212;
+    .banner {
+      background-image: url("a2181999-3029-4f95-9f19-0386889cbcd4.png");
+      background-size: cover;
+      background-position: center;
+      height: 350px;
+      width: 100%;
     }
     main {
-      padding: 60px 20px;
+      padding: 40px 20px;
       max-width: 800px;
       margin: 0 auto;
       text-align: center;
@@ -89,25 +77,22 @@
 <body>
 
   <header>
-    <div class="logo">Linear Block</div>
-    <nav>
-      <button onclick="scrollToId('rules')">Правила</button>
-      <button onclick="scrollToId('top')">Сервер</button>
-      <button onclick="scrollToId('tg')">ТГК</button>
-    </nav>
+    <img src="67162182-e261-4dde-9ec2-b73799d3685f.png" alt="Logo" class="logo-img">
   </header>
 
+  <div class="banner"></div>
+
   <main>
-    <h1 id="top">Linear Block</h1>
+    <h1>Linear Block</h1>
     <div class="ip">IP: 51.68.152.142:25860</div>
-    <h2 id="server">DDNet Server</h2>
+    <h2>DDNet Server</h2>
     <p>
       Linear Block — Помните, как все бесились, когда все блокались на обычной карте Linear? Теперь всё иначе!<br>
       Представляем вам Linear Block — карту, специально переделанную для блока и PvP.<br>
       Сервер работает 24/7 (Ну почти), так что вы можете играть, сколько захотите!
     </p>
 
-    <h2 id="rules">📜 Правила сервера</h2>
+    <h2>📜 Правила сервера</h2>
     <div class="rules">
       <p><b>Linear Block</b></p>
       <p>1. Запрещено использовать любые читы, модификации клиента или скрипты, дающие игровое преимущество (например, автокликеры, спидхаки, флай и т.д.).<br>❌ Бан без предупреждения.</p>
@@ -141,7 +126,7 @@
       <hr>
       <p>📌 Незнание правил не освобождает от ответственности.</p>
       <br>
-      <h2 id="tg">📢 Наш Telegram-канал</h2>
+      <h2>📢 Наш Telegram-канал</h2>
       <p>Также не забывайте подписываться на ТГК Сервера: <br>
       <a href="https://t.me/LinearBlock" target="_blank">https://t.me/LinearBlock</a></p>
       <button class="tg-button" onclick="window.open('https://t.me/LinearBlock', '_blank')">Перейти в ТГК</button>
@@ -151,12 +136,6 @@
   <div class="footer">
     &copy; 2025 Linear Block DDNet Server
   </div>
-
-  <script>
-    function scrollToId(id) {
-      document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
-    }
-  </script>
 
 </body>
 </html>
