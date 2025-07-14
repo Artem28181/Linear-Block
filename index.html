@@ -11,24 +11,16 @@
       color: #f0f0f0;
     }
     header {
-      padding: 10px 20px;
+      padding: 20px;
       background: #1f1f1f;
       display: flex;
-      align-items: center;
       justify-content: space-between;
+      align-items: center;
       position: sticky;
       top: 0;
-      z-index: 999;
+      z-index: 100;
     }
-    .logo-container {
-      display: flex;
-      align-items: center;
-    }
-    .logo-img {
-      height: 50px;
-      margin-right: 10px;
-    }
-    .logo-text {
+    .logo {
       font-size: 24px;
       font-weight: bold;
       color: #00ffaa;
@@ -46,15 +38,8 @@
       background: #00ffaa;
       color: #121212;
     }
-    .banner {
-      background-image: url('a2181999-3029-4f95-9f19-0386889cbcd4.png');
-      background-size: cover;
-      background-position: center;
-      height: 350px;
-      width: 100%;
-    }
     main {
-      padding: 40px 20px;
+      padding: 60px 20px;
       max-width: 800px;
       margin: 0 auto;
       text-align: center;
@@ -86,35 +71,18 @@
       background: #1f1f1f;
       text-align: center;
     }
-    .tg-button {
-      background: #0088cc;
-      color: white;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 6px;
-      font-size: 16px;
-      margin-top: 10px;
-      cursor: pointer;
-    }
-    .tg-button:hover {
-      background: #00aaff;
-    }
   </style>
 </head>
 <body>
 
   <header>
-    <div class="logo-container">
-      <img src="67162182-e261-4dde-9ec2-b73799d3685f.png" alt="Logo" class="logo-img">
-      <div class="logo-text">Linear Block</div>
-    </div>
+    <div class="logo">Linear Block</div>
     <nav>
       <button onclick="scrollToId('top')">Сервер</button>
       <button onclick="scrollToId('rules')">Правила</button>
+      <button onclick="scrollToId('tgk')">ТГК</button>
     </nav>
   </header>
-
-  <div class="banner"></div>
 
   <main>
     <h1 id="top">Linear Block</h1>
@@ -145,12 +113,13 @@
       <p>14. Администрация имеет право принять меры без объяснения причин, если поведение игрока нарушает атмосферу сервера.</p>
       <hr>
       <p>📌 Незнание правил не освобождает от ответственности.</p>
-      <br>
-      <h2>📢 Наш Telegram-канал</h2>
-      <p>Также не забывайте подписываться на ТГК Сервера: <br>
-      <a href="https://t.me/LinearBlock" target="_blank">https://t.me/LinearBlock</a></p>
-      <button class="tg-button" onclick="window.open('https://t.me/LinearBlock', '_blank')">Перейти в ТГК</button>
     </div>
+
+    <h2 id="tgk">📢 Наш Telegram-канал</h2>
+    <p>Также не забывайте подписываться на ТГК Сервера:</p>
+    <p><a href="https://t.me/LinearBlock" target="_blank">https://t.me/LinearBlock</a></p>
+    <button style="background:#0088cc; color:white; padding:10px 20px; border:none; border-radius:6px; font-size:16px; cursor:pointer;" onclick="window.open('https://t.me/LinearBlock', '_blank')">Перейти в ТГК</button>
+
   </main>
 
   <div class="footer">
