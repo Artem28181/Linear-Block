@@ -62,7 +62,7 @@
       margin-bottom: 10px;
     }
     .online {
-      font-size: 20px;
+      font-size: 18px;
       color: #ffaa00;
       margin-bottom: 30px;
     }
@@ -116,8 +116,10 @@
 
     <h2 id="rules">📜 Правила сервера</h2>
     <div class="rules">
-      <!-- Правила остаются без изменений -->
-      <!-- ... -->
+      <!-- Правила сервера (оставлены без изменений) -->
+      <p><b>Linear Block</b></p>
+      <p>1. Запрещено использовать любые читы...</p>
+      <!-- ...остальной текст правил -->
       <p>📌 Незнание правил не освобождает от ответственности.</p>
     </div>
 
@@ -138,22 +140,26 @@
       if (el) el.scrollIntoView({ behavior: 'smooth' });
     }
 
-    // Онлайн-детектор через DDNet API
+    // Онлайн-детектор через поиск по имени
     fetch('https://ddnet.org/serverlist/serverlist.json')
       .then(res => res.json())
       .then(data => {
-        const server = data.find(s => s.address === "51.68.152.142:25860");
-        if (server) {
-          document.getElementById("online").textContent =
-            `Сейчас на сервере: ${server.num_players} игроков`;
+        const matches = data.filter(s => s.name.toLowerCase().includes("linear block"));
+
+        const onlineElement = document.getElementById("online");
+        if (matches.length > 0) {
+          const server = matches[0];
+          onlineElement.innerHTML = `
+            Сейчас на сервере: <b>${server.num_players}</b> игроков<br>
+            Название: <b>${server.name}</b><br>
+            Адрес: <b>${server.address}</b>
+          `;
         } else {
-          document.getElementById("online").textContent =
-            "Сервер не найден в списке DDNet.";
+          onlineElement.textContent = "Сервер не найден. Проверь название или IP.";
         }
       })
-      .catch(() => {
-        document.getElementById("online").textContent =
-          "Не удалось загрузить онлайн.";
+      .catch(err => {
+        document.getElementById("online").textContent = "Не удалось загрузить онлайн.";
       });
   </script>
 
