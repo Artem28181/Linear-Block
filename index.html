@@ -143,43 +143,27 @@
     .close-btn:hover {
       color: #00dd99;
     }
-    /* Форма отзывов */
-    .review-form {
-      margin-top: 40px;
-      text-align: left;
+    /* Отзывы */
+    .reviews-list {
       max-width: 600px;
-      margin-left: auto;
-      margin-right: auto;
+      margin: 20px auto 40px;
+      text-align: left;
+      border-top: 1px solid #00ffaa;
     }
-    .review-form label {
-      display: block;
-      margin-bottom: 6px;
+    .review-item {
+      border-bottom: 1px solid #00ffaa;
+      padding: 12px 0;
+    }
+    .review-item:last-child {
+      border-bottom: none;
+    }
+    .review-name {
       font-weight: bold;
+      color: #00ffaa;
+      margin-bottom: 4px;
     }
-    .review-form input,
-    .review-form textarea {
-      width: 100%;
-      padding: 8px;
-      margin-bottom: 12px;
-      border-radius: 5px;
-      border: 1px solid #00ffaa;
-      background: #121212;
-      color: #f0f0f0;
-      font-family: 'Segoe UI', sans-serif;
-      font-size: 14px;
-      resize: vertical;
-    }
-    .review-form button {
-      background: #00ffaa;
-      color: #121212;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 16px;
-    }
-    .review-form button:hover {
-      background: #00cc99;
+    .review-text {
+      white-space: pre-line;
     }
   </style>
 </head>
@@ -229,21 +213,28 @@
       <p>📌 Незнание правил не освобождает от ответственности.</p>
     </div>
 
-    <!-- Отзывов нет, оставим форму -->
     <h2 id="reviews">⭐ Оставить отзыв</h2>
-    <form class="review-form" onsubmit="submitReview(event)">
-      <label for="name">Имя:</label>
-      <input id="name" type="text" placeholder="Ваш ник" required />
+    <p>Чтобы оставить отзыв, пожалуйста, <button class="tg-button" onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLSfvP2MX8awIIbbJln9v1m82NUpQge2ceUtcgJp2-T0bYs62bA/viewform?usp=dialog', '_blank')">заполните форму отзывов</button> в Google Forms.</p>
 
-      <label for="comment">Отзыв:</label>
-      <textarea id="comment" rows="4" placeholder="Ваш отзыв" required></textarea>
-
-      <button type="submit">Отправить</button>
-    </form>
+    <h3>Отзывы игроков:</h3>
+    <div class="reviews-list" aria-live="polite">
+      <div class="review-item">
+        <div class="review-name">Игрок1</div>
+        <div class="review-text">Отличный сервер, атмосфера супер! Рекомендую всем.</div>
+      </div>
+      <div class="review-item">
+        <div class="review-name">PlayerX</div>
+        <div class="review-text">Очень классный PvP, много интересных зон и мини-игр.</div>
+      </div>
+      <div class="review-item">
+        <div class="review-name">Никита</div>
+        <div class="review-text">Администрация отзывчивая, всё работает стабильно.</div>
+      </div>
+    </div>
 
     <h2 id="tgk">📢 Наш Telegram-канал</h2>
     <p>Также не забывайте подписываться на ТГК Сервера:</p>
-    <p><a href="https://t.me/LinearBlock" target="_blank">https://t.me/LinearBlock</a></p>
+    <p><a href="https://t.me/LinearBlock" target="_blank" rel="noopener noreferrer">https://t.me/LinearBlock</a></p>
     <button class="tg-button" onclick="window.open('https://t.me/LinearBlock', '_blank')">Перейти в ТГК</button>
   </main>
 
@@ -253,7 +244,7 @@
 
   <!-- Модальное окно справочника -->
   <div id="guideModal" class="modal" tabindex="-1" role="dialog" aria-labelledby="guideTitle" aria-hidden="true">
-    <div class="modal-content">
+    <div class="modal-content" role="document">
       <span class="close-btn" onclick="closeGuide()" aria-label="Закрыть">&times;</span>
       <h1 id="guideTitle">Справочник по серверу Linear Block</h1>
       <p>Добро пожаловать в справочник!<br />
@@ -345,20 +336,6 @@
     };
 
     document.getElementById("year").innerText = new Date().getFullYear();
-
-    // Функция отправки отзыва (заглушка)
-    function submitReview(event) {
-      event.preventDefault();
-      const name = document.getElementById('name').value.trim();
-      const comment = document.getElementById('comment').value.trim();
-      if (!name || !comment) {
-        alert("Пожалуйста, заполните все поля.");
-        return;
-      }
-      alert("Спасибо за ваш отзыв, " + name + "!");
-      // Здесь можно добавить код для отправки данных на сервер или в Google Forms
-      event.target.reset();
-    }
   </script>
 
 </body>
