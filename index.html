@@ -207,7 +207,7 @@
     async function loadReviews() {
       const container = document.getElementById("reviews");
       try {
-        const res = await fetch("https://script.google.com/macros/s/AKfycbxzE3Q1iY6kYuybK62IbrtiBiYnlVxgLD8An2R22PTONMvoLBckcQXX2kM0ybi-Zgj99w/exec);
+        const res = await fetch("https://script.google.com/macros/s/AKfycbzAxgIBLFQ35XUm_eTMccxkY1O8aUqg34_MNCuKJF5iXX3DGh0GbqTOSsFdC8epLhlm0Q/exec);
         const reviews = await res.json();
         container.innerHTML = "";
 
