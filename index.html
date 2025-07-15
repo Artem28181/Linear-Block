@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Linear Block DDNet Server</title>
   <style>
     body {
@@ -86,7 +86,6 @@
     .tg-button:hover {
       background: #00aaff;
     }
-
     body.light {
       background: #f0f0f0;
       color: #121212;
@@ -103,14 +102,84 @@
       background: #006644;
       color: white;
     }
-
-    .review {
-      border-bottom: 1px solid #444;
-      padding: 10px 0;
+    /* Модальное окно */
+    .modal {
+      display: none; /* скрыто по умолчанию */
+      position: fixed;
+      z-index: 200;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.8);
+    }
+    .modal-content {
+      background-color: #1f1f1f;
+      margin: 60px auto;
+      padding: 30px 40px;
+      border-radius: 10px;
+      max-width: 700px;
+      color: #f0f0f0;
+      max-height: 80vh;
+      overflow-y: auto;
+      font-size: 16px;
+      line-height: 1.5;
       text-align: left;
     }
-    .review:last-child {
+    .modal-content h1,
+    .modal-content h2 {
+      color: #00ffaa;
+    }
+    .close-btn {
+      float: right;
+      font-size: 24px;
+      font-weight: bold;
+      color: #00ffaa;
+      cursor: pointer;
+      margin-top: -10px;
+      margin-bottom: 10px;
+    }
+    .close-btn:hover {
+      color: #00dd99;
+    }
+    /* Форма отзывов */
+    .review-form {
+      margin-top: 40px;
+      text-align: left;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .review-form label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: bold;
+    }
+    .review-form input,
+    .review-form textarea {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 12px;
+      border-radius: 5px;
+      border: 1px solid #00ffaa;
+      background: #121212;
+      color: #f0f0f0;
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 14px;
+      resize: vertical;
+    }
+    .review-form button {
+      background: #00ffaa;
+      color: #121212;
+      padding: 10px 20px;
       border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    .review-form button:hover {
+      background: #00cc99;
     }
   </style>
 </head>
@@ -121,9 +190,10 @@
     <nav>
       <button onclick="scrollToId('top')">Сервер</button>
       <button onclick="scrollToId('rules')">Правила</button>
-      <button onclick="scrollToId('reviews')">Отзывы</button>
+      <!-- Убрали отзывы из меню -->
       <button onclick="scrollToId('tgk')">ТГК</button>
       <button onclick="toggleTheme()">🌓</button>
+      <button onclick="openGuide()">Справочник</button> <!-- Кнопка справочника -->
     </nav>
   </header>
 
@@ -159,8 +229,17 @@
       <p>📌 Незнание правил не освобождает от ответственности.</p>
     </div>
 
-    <h2 id="reviews">⭐ Отзывы игроков</h2>
-    <div id="reviews-section">Загрузка отзывов...</div>
+    <!-- Отзывов нет, оставим форму -->
+    <h2 id="reviews">⭐ Оставить отзыв</h2>
+    <form class="review-form" onsubmit="submitReview(event)">
+      <label for="name">Имя:</label>
+      <input id="name" type="text" placeholder="Ваш ник" required />
+
+      <label for="comment">Отзыв:</label>
+      <textarea id="comment" rows="4" placeholder="Ваш отзыв" required></textarea>
+
+      <button type="submit">Отправить</button>
+    </form>
 
     <h2 id="tgk">📢 Наш Telegram-канал</h2>
     <p>Также не забывайте подписываться на ТГК Сервера:</p>
@@ -170,6 +249,65 @@
 
   <div class="footer">
     &copy; <span id="year"></span> Linear Block DDNet Server
+  </div>
+
+  <!-- Модальное окно справочника -->
+  <div id="guideModal" class="modal" tabindex="-1" role="dialog" aria-labelledby="guideTitle" aria-hidden="true">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeGuide()" aria-label="Закрыть">&times;</span>
+      <h1 id="guideTitle">Справочник по серверу Linear Block</h1>
+      <p>Добро пожаловать в справочник!<br />
+      Здесь вы найдёте подробную информацию о том, как начать играть и освоить основные механики Linear Block.</p>
+
+      <h2>1. Регистрация</h2>
+      <p>Для начала игры на сервере Linear Block необходимо пройти регистрацию. Используйте команду:</p>
+      <pre>/register "Имя" "Пароль" "Повтор пароля"</pre>
+      <p>После успешной регистрации войдите в игру с помощью команды:</p>
+      <pre>/login "Имя" "Пароль"</pre>
+
+      <h2>2. Начало игры</h2>
+      <p>После авторизации вы сможете зарабатывать внутриигровую валюту, собирая жёлтые монетки и открывая сундуки, расположенные на карте.</p>
+
+      <h2>3. Основные игровые зоны и возможности</h2>
+      <ul>
+        <li><b>Коги (Kogs):</b> специальный телепорт на спавне, где можно получить награды — телелазер, джетпак, бесконечный крюк и другие бонусы за прохождение когов.</li>
+        <li><b>Блок-зоны (Block):</b> места для PvP-сражений с другими игроками (на спавне).</li>
+        <li><b>RP-зона:</b> отель, где можно отдохнуть и пообщаться с друзьями (на спавне).</li>
+        <li><b>GUNS:</b> место получения оружия и снаряжения (на спавне).</li>
+      </ul>
+
+      <h2>4. Магазины и банк</h2>
+      <p>На спавне находятся три телепорта:</p>
+      <ul>
+        <li><b>Shop:</b> магазин, где можно купить предметы за внутриигровые деньги.</li>
+        <li><b>Bank:</b> банк для хранения денег, чтобы они не выпали при смерти.</li>
+        <li><b>Houses:</b> покупка домов (дома в разработке).</li>
+      </ul>
+
+      <h2>5. Управление магазинами и банком</h2>
+      <p><b>Магазин (Shop):</b></p>
+      <ol>
+        <li>Подойдите к боту и нажмите <b>F4</b>.</li>
+        <li>Стрелками влево или вправо выберите нужный предмет.</li>
+        <li>Для покупки нажмите <b>F3</b>.</li>
+      </ol>
+
+      <p><b>Банк (Bank):</b></p>
+      <ol>
+        <li>Подойдите к банку и нажмите <b>F4</b>.</li>
+        <li>Выберите действие — положить или снять деньги, используя <b>F4</b> или <b>F3</b> соответственно.</li>
+        <li>Укажите сумму и подтвердите нажатием <b>F3</b>.</li>
+      </ol>
+
+      <p><b>Дома (Houses):</b> управление аналогично магазину, но пока в разработке.</p>
+
+      <h2>6. Мини-игры</h2>
+      <ul>
+        <li><b>/1vs1:</b> дуэль с другим игроком.</li>
+        <li><b>/Block:</b> блок-зона для сражений с ботом или игроками.</li>
+        <li><b>/Survival:</b> аналог Block, но начинается при наличии минимум 4 игроков; активируется «Vanilla mode» — урон от ударов и выстрелов уменьшает здоровье. Для защиты используйте молоток или пистолет, собирая бонусы на арене.</li>
+      </ul>
+    </div>
   </div>
 
   <script>
@@ -188,28 +326,39 @@
       document.body.classList.toggle("light");
     }
 
+    function openGuide() {
+      document.getElementById('guideModal').style.display = 'block';
+      document.body.style.overflow = 'hidden'; // запретить скролл фона при открытом модальном окне
+    }
+
+    function closeGuide() {
+      document.getElementById('guideModal').style.display = 'none';
+      document.body.style.overflow = 'auto';
+    }
+
+    // Закрытие модального окна по клику вне содержимого
+    window.onclick = function(event) {
+      const modal = document.getElementById('guideModal');
+      if (event.target === modal) {
+        closeGuide();
+      }
+    };
+
     document.getElementById("year").innerText = new Date().getFullYear();
 
-    // Загрузка отзывов
-    fetch("https://script.googleusercontent.com/macros/echo?user_content_key=AehSKLgIfoYAMdw0jIOFpvlEXqkZK_Mjoz7Z033zzi5XoW5kz5qSqZRVFRUzyrta4Ff-2z2nwpYA-4vGNBaJfZdqJ8o_F4gXBPEX2aBvPOXKQJ1jUw-xNvn4-scQr-H0Zw6NDmInFtFtA0PjS8rPjpdA2LhoYGmFcFjAf46_d-U3zrdqe-QlR1rFyRvKYYj6ZZtCLXSs-jeTf_I0tQHiZ11xyhLQ7jK2HOI8RqUF-_dbicIbBBDoz3UGVzhVF7pFU9Lglma8JOTcrIoXy5BWesrC6c8kONys1IoNU4_dd9rq&lib=M1HiBeUoS9_-RP2BaMN_lE-wGmMk29c3Q")
-      .then(res => res.json())
-      .then(data => {
-        const section = document.getElementById("reviews-section");
-        if (!data || data.length === 0) {
-          section.innerText = "Нет отзывов.";
-          return;
-        }
-        section.innerHTML = "";
-        data.forEach(entry => {
-          const div = document.createElement("div");
-          div.className = "review";
-          div.innerHTML = `<strong>${entry.rating}</strong><br>${entry.comment}`;
-          section.appendChild(div);
-        });
-      })
-      .catch(() => {
-        document.getElementById("reviews-section").innerText = "❌ Ошибка при загрузке отзывов.";
-      });
+    // Функция отправки отзыва (заглушка)
+    function submitReview(event) {
+      event.preventDefault();
+      const name = document.getElementById('name').value.trim();
+      const comment = document.getElementById('comment').value.trim();
+      if (!name || !comment) {
+        alert("Пожалуйста, заполните все поля.");
+        return;
+      }
+      alert("Спасибо за ваш отзыв, " + name + "!");
+      // Здесь можно добавить код для отправки данных на сервер или в Google Forms
+      event.target.reset();
+    }
   </script>
 
 </body>
