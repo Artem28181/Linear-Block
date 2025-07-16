@@ -308,7 +308,111 @@
       document.getElementById('guideModal').style.display = 'none';
       document.body.style.overflow = 'auto';
     }
+<!-- Модальное окно отзывов -->
+<div id="reviewsModal" class="modal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-content">
+    <span class="close-btn" onclick="closeReviews()" aria-label="Закрыть">&times;</span>
+    <h1>Отзывы игроков Linear Block</h1>
+    <div id="reviews-container">Загрузка отзывов...</div>
+    <h2>Оставить отзыв</h2>
+    <iframe 
+      src="https://docs.google.com/forms/d/e/1FAIpQLSfvP2MX8awIIbbJln9v1m82NUpQge2ceUtcgJp2-T0bYs62bA/viewform?embedded=true" 
+      title="Форма отзывов">Загрузка формы…
+    </iframe>
+  </div>
+</div>
 
+<script>
+  function scrollToId(id) {
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
+  }
+
+  function copyIP() {
+    const ip = document.getElementById("srv-ip");
+    if (ip) {
+      navigator.clipboard.writeText(ip.innerText);
+      alert("IP скопирован в буфер!");
+    }
+  }
+
+  function toggleTheme() {
+    document.body.classList.toggle("light");
+  }
+
+  function openGuide() {
+    document.getElementById('guideModal').style.display = 'block';
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeGuide() {
+    document.getElementById('guideModal').style.display = 'none';
+    document.body.style.overflow = 'auto';
+  }
+
+  function openReviews() {
+    document.getElementById('reviewsModal').style.display = 'block';
+    document.body.style.overflow = 'hidden';
+    loadReviews();
+  }
+
+  function closeReviews() {
+    document.getElementById('reviewsModal').style.display = 'none';
+    document.body.style.overflow = 'auto';
+  }
+
+  async function loadReviews() {
+    const container = document.getElementById('reviews-container');
+    container.textContent = 'Загрузка отзывов...';
+
+    try {
+      const res = await fetch('https://script.googleusercontent.com/macros/echo?user_content_key=AehSKLgIfoYAMdw0jIOFpvlEXqkZK_Mjoz7Z033zzi5XoW5kz5qSqZRVFRUzyrta4Ff-2z2nwpYA-4vGNBaJfZdqJ8o_F4gXBPEX2aBvPOXKQJ1jUw-xNvn4-scQr-H0Zw6NDmInFtFtA0PjS8rPjpdA2LhoYGmFcFjAf46_d-U3zrdqe-QlR1rFyRvKYYj6ZZtCLXSs-jeTf_I0tQHiZ11xyhLQ7jK2HOI8RqUF-_dbicIbBBDoz3UGVzhVF7pFU9Lglma8JOTcrIoXy5BWesrC6c8kONys1IoNU4_dd9rq&lib=M1HiBeUoS9_-RP2BaMN_lE-wGmMk29c3Q');
+      const data = await res.json();
+
+      if (!Array.isArray(data) || data.length === 0) {
+        container.innerHTML = '<p>Пока нет отзывов.</p>';
+        return;
+      }
+
+      container.innerHTML = '';
+      data.forEach(item => {
+        const div = document.createElement('div');
+        div.className = 'review';
+        const name = item.name || item.Имя || 'Аноним';
+        const comment = item.comment || item.Отзыв || '';
+        div.innerHTML = `
+          <div class="review-name">${sanitize(name)}</div>
+          <div class="review-text">${sanitize(comment)}</div>
+        `;
+        container.appendChild(div);
+      });
+
+    } catch (e) {
+      container.innerHTML = `<p>Ошибка загрузки отзывов: ${e.message}</p>`;
+    }
+  }
+
+  function sanitize(str) {
+    if (!str) return '';
+    return str.replace(/[&<>"']/g, c => ({
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#39;'
+    })[c]);
+  }
+
+  window.onclick = function(event) {
+    if (event.target === document.getElementById('guideModal')) closeGuide();
+    if (event.target === document.getElementById('reviewsModal')) closeReviews();
+  };
+
+  document.getElementById("year").innerText = new Date().getFullYear();
+</script>
+
+</body>
+</html>
     window.onclick = function(event) {
       const modal = document.getElementById('guideModal');
       if (event.target === modal) {
