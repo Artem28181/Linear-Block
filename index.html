@@ -309,7 +309,7 @@
       document.body.style.overflow = 'auto';
     }
 <!-- Модальное окно отзывов -->
-<div id="reviewsModal" class="modal" tabindex="-1" role="dialog" aria-hidden="true">
+<div id="reviewsModal" class="modal" tabindex="-1" role="dialog" aria-hidden="true" style="display:none;">
   <div class="modal-content">
     <span class="close-btn" onclick="closeReviews()" aria-label="Закрыть">&times;</span>
     <h1>Отзывы игроков Linear Block</h1>
@@ -317,39 +317,14 @@
     <h2>Оставить отзыв</h2>
     <iframe 
       src="https://docs.google.com/forms/d/e/1FAIpQLSfvP2MX8awIIbbJln9v1m82NUpQge2ceUtcgJp2-T0bYs62bA/viewform?embedded=true" 
-      title="Форма отзывов">Загрузка формы…
+      title="Форма отзывов" 
+      style="width:100%; height:520px; border:none; border-radius:8px;">
+      Загрузка формы…
     </iframe>
   </div>
 </div>
 
 <script>
-  function scrollToId(id) {
-    const el = document.getElementById(id);
-    if (el) el.scrollIntoView({ behavior: 'smooth' });
-  }
-
-  function copyIP() {
-    const ip = document.getElementById("srv-ip");
-    if (ip) {
-      navigator.clipboard.writeText(ip.innerText);
-      alert("IP скопирован в буфер!");
-    }
-  }
-
-  function toggleTheme() {
-    document.body.classList.toggle("light");
-  }
-
-  function openGuide() {
-    document.getElementById('guideModal').style.display = 'block';
-    document.body.style.overflow = 'hidden';
-  }
-
-  function closeGuide() {
-    document.getElementById('guideModal').style.display = 'none';
-    document.body.style.overflow = 'auto';
-  }
-
   function openReviews() {
     document.getElementById('reviewsModal').style.display = 'block';
     document.body.style.overflow = 'hidden';
@@ -388,7 +363,7 @@
       });
 
     } catch (e) {
-      container.innerHTML = `<p>Ошибка загрузки отзывов: ${e.message}</p>`;
+      container.innerHTML = `<p>Ошибка загрузки отзывов: ${sanitize(e.message)}</p>`;
     }
   }
 
@@ -408,20 +383,7 @@
     if (event.target === document.getElementById('reviewsModal')) closeReviews();
   };
 
+  // Обновление года в футере
   document.getElementById("year").innerText = new Date().getFullYear();
 </script>
 
-</body>
-</html>
-    window.onclick = function(event) {
-      const modal = document.getElementById('guideModal');
-      if (event.target === modal) {
-        closeGuide();
-      }
-    };
-
-    document.getElementById("year").innerText = new Date().getFullYear();
-  </script>
-
-</body>
-</html>
